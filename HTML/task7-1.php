@@ -29,7 +29,7 @@ class Staff{
         }
 
     public function show(){
-        printf("(%s),%s,%d歳,%s\n",$this ->id,$this -> name,$this -> age,$this ->sex);
+        printf("(%s),%s,%d歳,%s <br>",$this ->id,$this -> name,$this -> age,$this ->sex);
         }
     }
 

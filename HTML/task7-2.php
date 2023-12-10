@@ -29,7 +29,7 @@
             }
 
         public function show(){
-            printf("(%s),%s,%d歳,%s\n",$this ->id,$this -> name,$this -> age,$this ->sex);
+            printf("(%s),%s,%d歳,%s<br>",$this ->id,$this -> name,$this -> age,$this ->sex);
             }
         }
 
@@ -45,7 +45,7 @@
             }
 
         public function show(){
-            printf("(%s),%s,%d歳,%s 時給:%d円 \n",$this ->id,$this -> name,$this -> age,$this ->sex,$this ->jikyu);
+            printf("(%s),%s,%d歳,%s 時給:%d円 <br>",$this ->id,$this -> name,$this -> age,$this ->sex,$this ->jikyu);
             }
     }
 
@@ -54,7 +54,7 @@
     $staff2 = new Staff("山田 花子", 25, "女性");
     $staff3 = new Staff("鈴木 次郎", 27, "男性");
     $partstaff1 = new PartStaff("田中 友子", 27, "女性",900);
-    $staff3 = new Staff("中村 三郎", 27, "男性");
+    $staff4 = new Staff("中村 三郎", 27, "男性");
 
     //インスタンス表示
     $staff1->show();
