@@ -6,33 +6,43 @@
   <title>Document</title>
 </head>
 <body>
-  <?php
+<?php
+class Staff{
+    //プロパティ
+    private $name;
+    private $age;
+    private $sex;
+    private $id;
 
-    class Staff {
-        private $name;
-        private $age;
-        private $sex;
-        private $id;
-
-        public function __construct($name, $age, $sex) {
-            $this->name = $name;
-            $this->age = $age;
-            $this->sex = $sex;
-            $this->id = sprintf('S%04d', self::$number++);
+    //メゾット
+    public function __construct($name,$age,$sex){
+        $this -> name = $name;
+        $this -> age = $age;
+        $this -> sex = $sex;
+        $this -> id = 'S' . sprintf('%04d',self::number());
         }
 
-        public function show() {
-            printf("(%s)%s %s %d歳 %s\n", $this->id, $this->name, $this->age, $this->sex);
+    private static $counter = 1;
+
+    public static function number(){
+        return self::$counter++;
+        }
+
+    public function show(){
+        printf("(%s),%s,%d歳,%s\n",$this ->id,$this -> name,$this -> age,$this ->sex);
         }
     }
 
-    Staff::$number = 1;
+//インスタンス生成
+$staff1 = new Staff("佐藤 一郎", 31, "男性");
+$staff2 = new Staff("山田 花子", 25, "女性");
+$staff3 = new Staff("鈴木 次郎", 27, "男性");
 
-    $staff1 = new Staff("佐藤", "一郎", 31, "男");
-    $staff1->show();
+//インスタンス表示
+$staff1->show();
+$staff2->show();
+$staff3->show();
 
-    print_r($staff1)
-  ?>
-
+?>
 </body>
 </html>
