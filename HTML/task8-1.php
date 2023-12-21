@@ -1,18 +1,18 @@
 <?php
-$nameError = "";
-$kanaError = "";
-$phoneError = "";
-$emailError = "";
-$textareaError = "";
-$inquiryError = "";
-$checkboxError = "";
-$name = "";
-$kana = "";
-$phone = "";
-$email = "";
-$textarea = "";
-$inquiry = "";
-$checkbox = "";
+$nameError = null;
+$kanaError = null;
+$phoneError = null;
+$emailError = null;
+$textareaError = null;
+$inquiryError = null;
+$checkboxError = null;
+$name = null;
+$kana = null;
+$phone = null;
+$email = null;
+$textarea = null;
+$inquiry = null;
+$checkbox = null;
 
 
 session_start();
@@ -97,7 +97,7 @@ if ($a && $b && $c && $d && $e && $f && $g) {
       <a href="#" class="menu_03">メニュー03</a>
     </div>
     <div class="mv">
-      <h1><img src="img/mv.png" alt=""></h1>
+      <h1><img src="img/mv.png" alt=null></h1>
     </div>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <section class="sec_01">
