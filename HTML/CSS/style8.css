@@ -124,6 +124,7 @@ img{
     font-size: 14px;
   }
 }
+
 .sec_02{
   border: 1px solid #cccccc;
 }
@@ -141,7 +142,7 @@ img{
 .sec_02_right{
   border: 1px solid #cccccc;
   width:75%;
-  padding:5px 0;
+  padding:3px 0;
 }
 .sec_02_right_01{
   border: 1px solid #cccccc;
@@ -290,4 +291,11 @@ footer p {
   text-align: center;
   font-size: 12px;
   padding: 20px 0;
+}
+.error {
+  display: flex;
+  color: red;
+  font-weight: bold;
+  justify-content: center;
+  padding-top:2px;
 }

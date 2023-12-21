@@ -1,40 +1,69 @@
 <?php
-$nameError = '';
-$phoneError = '';
-$emailError = '';
-$textareaError = '';
-$inquiryError = '';
-$name = '';
-$phone = '';
-$email = '';
-$textarea = '';
-$inquiry = '';
+$nameError = null;
+$kanaError = null;
+$phoneError = null;
+$emailError = null;
+$textareaError = null;
+$inquiryError = null;
+$checkboxError = null;
+$name = null;
+$kana = null;
+$phone = null;
+$email = null;
+$textarea = null;
+$inquiry = null;
+$checkbox = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
+    $kana = $_POST["kana"];
     $phone = $_POST["phone"];
     $email = $_POST["email"];
-    $textarea = $_POST["email"];
+    $textarea = $_POST["textarea"];
     $inquiry = $_POST["inquiry"];
+    $checkbox = $_POST["checkbox"];
 
     if (empty($name)) {
         $nameError = 'お名前を入力してください';
-    }
+    } else {$a=true;
+}
+
+if (empty($kana)) {
+        $kanaError = 'カタカナで入力してください';
+    } else {$b=true;
+}
 
     if (empty($phone) || !is_numeric($phone) || !(strlen((string)$phone) == 10 || strlen((string)$phone) == 11)) {
       $phoneError = '10桁または11桁の電話番号を入力してください';
-    }
+    } else {$c=true;
+}
 
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $emailError = '正しいメールアドレスを入力してください';
-    }
+    } else {$d=true;
+}
+
 
     if (empty($textarea)) {
       $textareaError = 'お問い合わせ内容を入力してください';
-    }
-    if (empty($inquiry)) {
-      $inquiryError = '選択してください';
-    }
+    } else {$e=true;
+}
+
+    if ($inquiry == "default") {
+      $inquiryError = 'お問い合わせ内容を選択してください';
+    } else {$f=true;
+}
+
+if ($checkbox == false) {
+      $checkboxError = 'チェックしてください';
+    } else {$g=true;
+}
+
+
+if ($a && $b && $c && $d && $e && $f && $g) {
+    $check = true;
+}
+
 }
 ?>
 
@@ -82,90 +111,107 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section class="sec_02">
       <div class="wrapper">
         <div class="sec_02_content">
-          <div class="sec_02_box">
+          <div class="error">
+            <?php if (!empty($nameError)) : ?>
+              <div><?php echo $nameError ; ?></div>
+              <?php endif; ?>
+            </div>
+            <div class="sec_02_box">
             <div class="sec_02_left">
               <p class="b">お名前</p>
               <p class="p">必須</p>
             </div>
-            <?php if (!empty($nameError)) : ?>
-              <div><?php echo $nameError; ?></div>
-                <?php endif; ?>
             <div class="sec_02_right">
-                <input type="text" name="name" placeholder="山田太郎" value="<?php echo htmlspecialchars($name); ?>"  required>
+                <input type="text" name="name" placeholder="山田太郎" value="<?php echo htmlspecialchars($name); ?>" >
             </div>
           </div>
-          <div class="sec_02_box">
+          <div class="error">
+            <?php if (!empty($kanaError)) : ?>
+              <div><?php echo $kanaError; ?></div>
+              <?php endif; ?>
+            </div>
+            <div class="sec_02_box">
             <div class="sec_02_left">
               <p class="b">フリガナ</p>
               <p class="p">必須</p>
             </div>
-            <?php if (!empty($nameError)) : ?>
-              <div><?php echo $nameError; ?></div>
-                <?php endif; ?>
             <div class="sec_02_right">
-                <input type="text" name="kana" placeholder="ヤマダタロウ" value="<?php echo htmlspecialchars($name); ?>"  required>
+                <input type="text" name="kana" placeholder="ヤマダタロウ" value="<?php echo htmlspecialchars($kana); ?>"  >
             </div>
           </div>
-          <div class="sec_02_box">
+          <div class="error">
+            <?php if (!empty($emailError)) : ?>
+              <div><?php echo $emailError; ?></div>
+              <?php endif; ?>
+            </div>
+            <div class="sec_02_box">
             <div class="sec_02_left">
               <p class="b">メールアドレス</p>
               <p class="p">必須</p>
             </div>
-            <?php if (!empty($emailError)) : ?>
-              <div><?php echo $emailError; ?></div>
-                <?php endif; ?>
             <div class="sec_02_right">
                 <input type="text" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="info@fast-creademy.jp">
             </div>
           </div>
-          <div class="sec_02_box">
+          <div class="error">
+            <?php if (!empty($phoneError)) : ?>
+              <div><?php echo $phoneError; ?></div>
+              <?php endif; ?>
+            </div>
+            <div class="sec_02_box">
              <div class="sec_02_left">
               <p class="b">電話番号</p>
               <p class="p">必須</p>
             </div>
-            <?php if (!empty($phoneError)) : ?>
-              <div><?php echo $phoneError; ?></div>
-                <?php endif; ?>
             <div class="sec_02_right">
                 <input type="text" name="phone" value="<?php echo htmlspecialchars($phone); ?>" placeholder="03-1234-5678">
             </div>
           </div>
-          <div class="sec_02_box">
+          <div class="error">
+            <?php if ($inquiryError) : ?>
+              <div><?php echo $inquiryError; ?></div>
+              <?php endif; ?>
+            </div>
+            <div class="sec_02_box">
             <div class="sec_02_left">
               <p class="b">お問い合わせ項目</p>
               <p class="p">必須</p>
             </div>
-            <?php if (!empty($inquiryError)) : ?>
-              <div><?php echo $inquiryError; ?></div>
-              <?php endif; ?>
             <div class="sec_02_right_01">
-              <select name="inquiry" required>
-                <option value="">選択してください</option>
-                <option <?php if ($inquiry == '問い合わせ1') echo 'selected'; ?>>問い合わせ1</option>
-                <option <?php if ($inquiry == '問い合わせ2') echo 'selected'; ?>>問い合わせ2</option>
-                <option <?php if ($inquiry == '問い合わせ3') echo 'selected'; ?>>問い合わせ3</option>
+              <select name="inquiry">
+                <option value="default">選択してください</option>
+                <option value="inquiry1">問い合わせ１</option>
+                <option value="inquiry2">問い合わせ２</option>
+                <option value="inquiry3">問い合わせ３</option>
               </select>
             </div>
           </div>
-          <div class="sec_02_box">
+          <div class="error">
+            <?php if (!empty($textareaError)) : ?>
+              <div><?php echo $textareaError; ?></div>
+              <?php endif; ?>
+          </div>
+            <div class="sec_02_box">
             <div class="sec_02_left">
               <p class="b">お問い合わせ内容</p>
               <p class="p">必須</p>
             </div>
-            <?php if (!empty($phoneError)) : ?>
-              <div><?php echo $phoneError; ?></div>
-                <?php endif; ?>
-            <div class="sec_02_right">
-                <textarea rows="7" name="phone" value="<?php echo htmlspecialchars($textarea); ?>" placeholder="こちらにお問い合わせ内容をご記入ください"></textarea>
+              <div class="sec_02_right">
+                <textarea rows="7" name="textarea" value="<?php echo htmlspecialchars($textarea); ?>" placeholder="こちらにお問い合わせ内容をご記入ください"></textarea>
             </div>
           </div>
-          <div class="sec_02_box">
+          <div class="error">
+            <?php if ($checkboxError) : ?>
+              <div><?php echo $checkboxError; ?></div>
+              <?php endif; ?>
+            </div>
+            <div class="sec_02_box">
             <div class="sec_02_left">
               <p class="b">個人情報保護方針</p>
               <p class="p">必須</p>
             </div>
-            <div class="sec_02_right_02">
-              <input type="checkbox" id="checkbox">
+              <div class="sec_02_right_02">
+              <input type="checkbox" id="checkbox" name="checkbox">
               <a href="#">個人情報保護方針📗</a>
               <p>に同意します。</p>
             </div>
@@ -176,7 +222,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section class="sec_03">
       <div class="wrapper">
         <div class="sec_03_content">
-          <input type="submit" value="確認">
+          <?php
+           if ($check == true) {
+              echo '<a href="task8-2.php">送信</a>';
+              } else {
+            echo '<input type="submit" value="確認">';
+          }
+          ?>
           <div class="sec_03_box">
           </div>
         </div>
