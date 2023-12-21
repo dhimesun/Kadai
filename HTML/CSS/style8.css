@@ -300,6 +300,7 @@ footer p {
   padding-top:2px;
 }
 .complete a{
+  color:Blue;
   display: flex;
   font:bold;
   font-size:50px;

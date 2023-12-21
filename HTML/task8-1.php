@@ -1,19 +1,21 @@
 <?php
-$nameError = null;
-$kanaError = null;
-$phoneError = null;
-$emailError = null;
-$textareaError = null;
-$inquiryError = null;
-$checkboxError = null;
-$name = null;
-$kana = null;
-$phone = null;
-$email = null;
-$textarea = null;
-$inquiry = null;
-$checkbox = null;
+$nameError = "";
+$kanaError = "";
+$phoneError = "";
+$emailError = "";
+$textareaError = "";
+$inquiryError = "";
+$checkboxError = "";
+$name = "";
+$kana = "";
+$phone = "";
+$email = "";
+$textarea = "";
+$inquiry = "";
+$checkbox = "";
 
+
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $kana = $_POST["kana"];
@@ -179,10 +181,10 @@ if ($a && $b && $c && $d && $e && $f && $g) {
             </div>
             <div class="sec_02_right_01">
               <select name="inquiry">
-                <option value="default">選択してください</option>
-                <option value="inquiry1">問い合わせ１</option>
-                <option value="inquiry2">問い合わせ２</option>
-                <option value="inquiry3">問い合わせ３</option>
+                <option value="default" <?php echo $inquiry == 'default' ? 'selected' : ''; ?>>選択してください</option>
+                <option value="inquiry1" <?php echo $inquiry == 'inquiry1' ? 'selected' : ''; ?>>問い合わせ１</option>
+                <option value="inquiry2" <?php echo $inquiry == 'inquiry2' ? 'selected' : ''; ?>>問い合わせ２</option>
+                <option value="inquiry3" <?php echo $inquiry == 'inquiry3' ? 'selected' : ''; ?>>問い合わせ３</option>
               </select>
             </div>
           </div>
@@ -197,7 +199,7 @@ if ($a && $b && $c && $d && $e && $f && $g) {
               <p class="p">必須</p>
             </div>
               <div class="sec_02_right">
-                <textarea rows="7" name="textarea" value="<?php echo htmlspecialchars($textarea); ?>" placeholder="こちらにお問い合わせ内容をご記入ください"></textarea>
+                <textarea rows="7" name="textarea"  placeholder="こちらにお問い合わせ内容をご記入ください"><?php echo htmlspecialchars($textarea); ?></textarea>
             </div>
           </div>
           <div class="error">
@@ -211,7 +213,7 @@ if ($a && $b && $c && $d && $e && $f && $g) {
               <p class="p">必須</p>
             </div>
               <div class="sec_02_right_02">
-              <input type="checkbox" id="checkbox" name="checkbox">
+              <input type="checkbox" id="checkbox" name="checkbox" <?php echo $checkbox ? 'checked' : ''; ?>>
               <a href="#">個人情報保護方針📗</a>
               <p>に同意します。</p>
             </div>

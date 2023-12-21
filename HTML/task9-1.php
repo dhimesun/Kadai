@@ -57,16 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="mv">
       <h1><img src="img/mv.png" alt=""></h1>
     </div>
-    <section class="sec_01">
-      <div class="wrapper">
-        <div class="sec_01_content">
-          <div class="sec_01_box">
-            <h1>お問い合わせ</h1>
-            <p>お問い合わせや業務内容に関するご質問は、電話またはこちらの問い合わせフォームより承っております。<br>後ほど担当者よりご連絡させていただきます。</p>
-          </div>
-        </div>
-      </div>
-    </section>
     <section class="sec_02--1">
       <div class="complete">
       <a>送信完了しました。</a>
