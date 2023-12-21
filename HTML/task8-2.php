@@ -38,8 +38,10 @@
         </div>
       </div>
     </section>
-    <section class="sec_02">
-      <a>完了しました。</a>
+    <section class="sec_02--1">
+      <div class="complete">
+      <a>送信完了しました。</a>
+      </div>
     </section>
     <section class="sec_04">
       <div class="wrapper">
