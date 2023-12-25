@@ -12,7 +12,7 @@
       $i = 0;
 
       while($i <= 6) {
-      echo '<li>'$week[$i].'</li>';
+      echo '<li>'. $week[$i] .'</li>';
       $i++;
       }
     ?>
