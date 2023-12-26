@@ -1,19 +1,18 @@
 <?php
-$nameError = null;
-$kanaError = null;
-$phoneError = null;
-$emailError = null;
-$textareaError = null;
-$inquiryError = null;
-$checkboxError = null;
-$name = null;
-$kana = null;
-$phone = null;
-$email = null;
-$textarea = null;
-$inquiry = null;
-$checkbox = null;
-
+$nameError = "";
+$kanaError = "";
+$phoneError = "";
+$emailError = "";
+$textareaError = "";
+$inquiryError = "";
+$checkboxError = "";
+$nameError = "";
+$kanaError = "";
+$phoneError = "";
+$emailError = "";
+$textareaError = "";
+$inquiryError = "";
+$checkboxError = "";
 
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -67,6 +66,51 @@ if ($a && $b && $c && $d && $e && $f && $g) {
 }
 
 }
+
+try {
+  $pdo = new PDO(
+      'mysql:host=localhost;dbname=consumer;charset=utf8mb4',
+      'root',
+      'root',
+      [
+          PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+          PDO::ATTR_EMULATE_PREPARES => false
+      ]
+  );
+
+  $tableExists = $pdo->query("SHOW TABLES LIKE 'my_inquiry'")->rowCount() > 0;
+
+  if (!$tableExists) {
+      $pdo->query(
+          "CREATE TABLE my_inquiry (
+             id INT PRIMARY KEY AUTO_INCREMENT,
+             name VARCHAR(128),
+             kana VARCHAR(128),
+             phone VARCHAR(32),
+             email VARCHAR(128),
+             inquiry VARCHAR(32),
+             textarea VARCHAR(512),
+             input_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+         )"
+      );
+  }
+
+  $stmt = $pdo->prepare("INSERT INTO my_inquiry (name, kana, phone, email, inquiry, textarea) VALUES (?, ?, ?, ?, ?, ?)");
+
+  $stmt->bindParam(1, $name, PDO::PARAM_STR);
+  $stmt->bindParam(2, $kana, PDO::PARAM_STR);
+  $stmt->bindParam(3, $phone, PDO::PARAM_STR);
+  $stmt->bindParam(4, $email, PDO::PARAM_STR);
+  $stmt->bindParam(5, $inquiry, PDO::PARAM_STR);
+  $stmt->bindParam(6, $textarea, PDO::PARAM_STR);
+
+  $result = $stmt->execute();
+
+} catch (PDOException $e) {
+  echo $e->getMessage() . '<br>';
+  exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +141,7 @@ if ($a && $b && $c && $d && $e && $f && $g) {
       <a href="#" class="menu_03">メニュー03</a>
     </div>
     <div class="mv">
-      <h1><img src="img/mv.png" alt=null></h1>
+      <h1><img src="img/mv.png" alt=""></h1>
     </div>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <section class="sec_01">
@@ -226,7 +270,7 @@ if ($a && $b && $c && $d && $e && $f && $g) {
         <div class="sec_03_content">
           <?php
            if ($check == true) {
-              echo '<a href="task8-2.php">送信</a>';
+              echo '<a href="task9-1.php">送信</a>';
               } else {
             echo '<input type="submit" value="確認">';
           }

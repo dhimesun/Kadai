@@ -1,18 +1,18 @@
 <?php
-$nameError = null;
-$kanaError = null;
-$phoneError = null;
-$emailError = null;
-$textareaError = null;
-$inquiryError = null;
-$checkboxError = null;
-$name = null;
-$kana = null;
-$phone = null;
-$email = null;
-$textarea = null;
-$inquiry = null;
-$checkbox = null;
+$nameError = "";
+$kanaError = "";
+$phoneError = "";
+$emailError = "";
+$textareaError = "";
+$inquiryError = "";
+$checkboxError = "";
+$name = "";
+$kana = "";
+$phone = "";
+$email = "";
+$textarea = "";
+$inquiry = "";
+$checkbox = "";
 
 
 session_start();
@@ -45,7 +45,7 @@ try {
              id INT PRIMARY KEY AUTO_INCREMENT,
              name VARCHAR(128),
              kana VARCHAR(128),
-             phone INT,
+             phone VARCHAR(32),
              email VARCHAR(128),
              inquiry VARCHAR(32),
              textarea VARCHAR(512),
@@ -58,19 +58,18 @@ try {
 
   $stmt->bindParam(1, $name, PDO::PARAM_STR);
   $stmt->bindParam(2, $kana, PDO::PARAM_STR);
-  $stmt->bindParam(3, $phone, PDO::PARAM_INT);
+  $stmt->bindParam(3, $phone, PDO::PARAM_STR);
   $stmt->bindParam(4, $email, PDO::PARAM_STR);
   $stmt->bindParam(5, $inquiry, PDO::PARAM_STR);
   $stmt->bindParam(6, $textarea, PDO::PARAM_STR);
 
   $result = $stmt->execute();
 
-  $stmt = $pdo->query("SELECT * FROM my_inquiry");
-  $results = $stmt->fetchAll();
 } catch (PDOException $e) {
   echo $e->getMessage() . '<br>';
   exit;
 }
+
 
 ?>
 
@@ -104,6 +103,16 @@ try {
     <div class="mv">
       <h1><img src="img/mv.png" alt=""></h1>
     </div>
+    <section class="sec_01">
+      <div class="wrapper">
+        <div class="sec_01_content">
+          <div class="sec_01_box">
+            <h1>お問い合わせ</h1>
+            <p>お問い合わせや業務内容に関するご質問は、電話またはこちらの問い合わせフォームより承っております。<br>後ほど担当者よりご連絡させていただきます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="sec_02--1">
       <div class="complete">
       <a>送信完了しました。</a>
