@@ -1,19 +1,4 @@
 <?php
-$nameError = "";
-$kanaError = "";
-$phoneError = "";
-$emailError = "";
-$textareaError = "";
-$inquiryError = "";
-$checkboxError = "";
-$name = "";
-$kana = "";
-$phone = "";
-$email = "";
-$textarea = "";
-$inquiry = "";
-$checkbox = "";
-
 
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -37,23 +22,6 @@ try {
       ]
   );
 
-  $tableExists = $pdo->query("SHOW TABLES LIKE 'my_inquiry'")->rowCount() > 0;
-
-  if (!$tableExists) {
-      $pdo->query(
-          "CREATE TABLE my_inquiry (
-             id INT PRIMARY KEY AUTO_INCREMENT,
-             name VARCHAR(128),
-             kana VARCHAR(128),
-             phone VARCHAR(32),
-             email VARCHAR(128),
-             inquiry VARCHAR(32),
-             textarea VARCHAR(512),
-             input_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-         )"
-      );
-  }
-
   $stmt = $pdo->prepare("INSERT INTO my_inquiry (name, kana, phone, email, inquiry, textarea) VALUES (?, ?, ?, ?, ?, ?)");
 
   $stmt->bindParam(1, $name, PDO::PARAM_STR);
@@ -69,7 +37,6 @@ try {
   echo $e->getMessage() . '<br>';
   exit;
 }
-
 
 ?>
 

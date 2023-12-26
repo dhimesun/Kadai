@@ -65,50 +65,6 @@ if ($a && $b && $c && $d && $e && $f && $g) {
     $check = true;
 }
 
-
-try {
-  $pdo = new PDO(
-      'mysql:host=localhost;dbname=consumer;charset=utf8mb4',
-      'root',
-      'root',
-      [
-          PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-          PDO::ATTR_EMULATE_PREPARES => false
-      ]
-  );
-
-  $tableExists = $pdo->query("SHOW TABLES LIKE 'my_inquiry'")->rowCount() > 0;
-
-  if (!$tableExists) {
-      $pdo->query(
-          "CREATE TABLE my_inquiry (
-             id INT PRIMARY KEY AUTO_INCREMENT,
-             name VARCHAR(128),
-             kana VARCHAR(128),
-             phone VARCHAR(32),
-             email VARCHAR(128),
-             inquiry VARCHAR(32),
-             textarea VARCHAR(512),
-             input_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-         )"
-      );
-  }
-
-  $stmt = $pdo->prepare("INSERT INTO my_inquiry (name, kana, phone, email, inquiry, textarea) VALUES (?, ?, ?, ?, ?, ?)");
-
-  $stmt->bindParam(1, $name, PDO::PARAM_STR);
-  $stmt->bindParam(2, $kana, PDO::PARAM_STR);
-  $stmt->bindParam(3, $phone, PDO::PARAM_STR);
-  $stmt->bindParam(4, $email, PDO::PARAM_STR);
-  $stmt->bindParam(5, $inquiry, PDO::PARAM_STR);
-  $stmt->bindParam(6, $textarea, PDO::PARAM_STR);
-
-  $result = $stmt->execute();
-
-} catch (PDOException $e) {
-  echo $e->getMessage() . '<br>';
-  exit;
-};
 }
 
 ?>
@@ -143,7 +99,6 @@ try {
     <div class="mv">
       <h1><img src="img/mv.png" alt=""></h1>
     </div>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <section class="sec_01">
       <div class="wrapper">
         <div class="sec_01_content">
@@ -157,129 +112,131 @@ try {
     <section class="sec_02">
       <div class="wrapper">
         <div class="sec_02_content">
-          <div class="error">
-            <?php if (!empty($nameError)) : ?>
-              <div><?php echo $nameError ; ?></div>
-              <?php endif; ?>
-            </div>
-            <div class="sec_02_box">
-            <div class="sec_02_left">
-              <p class="b">お名前</p>
-              <p class="p">必須</p>
-            </div>
-            <div class="sec_02_right">
-                <input type="text" name="name" placeholder="山田太郎" value="<?php echo htmlspecialchars($name); ?>" >
-            </div>
-          </div>
-          <div class="error">
-            <?php if (!empty($kanaError)) : ?>
-              <div><?php echo $kanaError; ?></div>
-              <?php endif; ?>
-            </div>
-            <div class="sec_02_box">
-            <div class="sec_02_left">
-              <p class="b">フリガナ</p>
-              <p class="p">必須</p>
-            </div>
-            <div class="sec_02_right">
-                <input type="text" name="kana" placeholder="ヤマダタロウ" value="<?php echo htmlspecialchars($kana); ?>"  >
-            </div>
-          </div>
-          <div class="error">
-            <?php if (!empty($emailError)) : ?>
-              <div><?php echo $emailError; ?></div>
-              <?php endif; ?>
-            </div>
-            <div class="sec_02_box">
-            <div class="sec_02_left">
-              <p class="b">メールアドレス</p>
-              <p class="p">必須</p>
-            </div>
-            <div class="sec_02_right">
-                <input type="text" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="info@fast-creademy.jp">
-            </div>
-          </div>
-          <div class="error">
-            <?php if (!empty($phoneError)) : ?>
-              <div><?php echo $phoneError; ?></div>
-              <?php endif; ?>
-            </div>
-            <div class="sec_02_box">
-             <div class="sec_02_left">
-              <p class="b">電話番号</p>
-              <p class="p">必須</p>
-            </div>
-            <div class="sec_02_right">
-                <input type="text" name="phone" value="<?php echo htmlspecialchars($phone); ?>" placeholder="03-1234-5678">
-            </div>
-          </div>
-          <div class="error">
-            <?php if ($inquiryError) : ?>
-              <div><?php echo $inquiryError; ?></div>
-              <?php endif; ?>
-            </div>
-            <div class="sec_02_box">
-            <div class="sec_02_left">
-              <p class="b">お問い合わせ項目</p>
-              <p class="p">必須</p>
-            </div>
-            <div class="sec_02_right_01">
-              <select name="inquiry">
-                <option value="default" <?php echo $inquiry == 'default' ? 'selected' : ''; ?>>選択してください</option>
-                <option value="inquiry1" <?php echo $inquiry == 'inquiry1' ? 'selected' : ''; ?>>問い合わせ１</option>
-                <option value="inquiry2" <?php echo $inquiry == 'inquiry2' ? 'selected' : ''; ?>>問い合わせ２</option>
-                <option value="inquiry3" <?php echo $inquiry == 'inquiry3' ? 'selected' : ''; ?>>問い合わせ３</option>
-              </select>
-            </div>
-          </div>
-          <div class="error">
-            <?php if (!empty($textareaError)) : ?>
-              <div><?php echo $textareaError; ?></div>
-              <?php endif; ?>
-          </div>
-            <div class="sec_02_box">
-            <div class="sec_02_left">
-              <p class="b">お問い合わせ内容</p>
-              <p class="p">必須</p>
-            </div>
+          <form method="post" action=<?php if($check) {echo "task9-1.php";}else {echo "task8-1.php";} ?>>
+            <div class="error">
+              <?php if (!empty($nameError)) : ?>
+                <div><?php echo $nameError ; ?></div>
+                <?php endif; ?>
+              </div>
+              <div class="sec_02_box">
+              <div class="sec_02_left">
+                <p class="b">お名前</p>
+                <p class="p">必須</p>
+              </div>
               <div class="sec_02_right">
-                <textarea rows="7" name="textarea"  placeholder="こちらにお問い合わせ内容をご記入ください"><?php echo htmlspecialchars($textarea); ?></textarea>
+                  <input type="text" name="name" placeholder="山田太郎" value="<?php echo htmlspecialchars($name); ?>" >
+              </div>
             </div>
-          </div>
-          <div class="error">
-            <?php if ($checkboxError) : ?>
-              <div><?php echo $checkboxError; ?></div>
-              <?php endif; ?>
+            <div class="error">
+              <?php if (!empty($kanaError)) : ?>
+                <div><?php echo $kanaError; ?></div>
+                <?php endif; ?>
+              </div>
+              <div class="sec_02_box">
+              <div class="sec_02_left">
+                <p class="b">フリガナ</p>
+                <p class="p">必須</p>
+              </div>
+              <div class="sec_02_right">
+                  <input type="text" name="kana" placeholder="ヤマダタロウ" value="<?php echo htmlspecialchars($kana); ?>"  >
+              </div>
             </div>
-            <div class="sec_02_box">
-            <div class="sec_02_left">
-              <p class="b">個人情報保護方針</p>
-              <p class="p">必須</p>
+            <div class="error">
+              <?php if (!empty($emailError)) : ?>
+                <div><?php echo $emailError; ?></div>
+                <?php endif; ?>
+              </div>
+              <div class="sec_02_box">
+              <div class="sec_02_left">
+                <p class="b">メールアドレス</p>
+                <p class="p">必須</p>
+              </div>
+              <div class="sec_02_right">
+                  <input type="text" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="info@fast-creademy.jp">
+              </div>
             </div>
-              <div class="sec_02_right_02">
-              <input type="checkbox" id="checkbox" name="checkbox" <?php echo $checkbox ? 'checked' : ''; ?>>
-              <a href="#">個人情報保護方針📗</a>
-              <p>に同意します。</p>
+            <div class="error">
+              <?php if (!empty($phoneError)) : ?>
+                <div><?php echo $phoneError; ?></div>
+                <?php endif; ?>
+              </div>
+              <div class="sec_02_box">
+              <div class="sec_02_left">
+                <p class="b">電話番号</p>
+                <p class="p">必須</p>
+              </div>
+              <div class="sec_02_right">
+                  <input type="text" name="phone" value="<?php echo htmlspecialchars($phone); ?>" placeholder="03-1234-5678">
+              </div>
             </div>
-          </div>
-        </div> 
-      </div>
-    </section>
-    <section class="sec_03">
-      <div class="wrapper">
-        <div class="sec_03_content">
-          <?php
+            <div class="error">
+              <?php if ($inquiryError) : ?>
+                <div><?php echo $inquiryError; ?></div>
+                <?php endif; ?>
+              </div>
+              <div class="sec_02_box">
+              <div class="sec_02_left">
+                <p class="b">お問い合わせ項目</p>
+                <p class="p">必須</p>
+              </div>
+              <div class="sec_02_right_01">
+                <select name="inquiry">
+                  <option value="default" <?php echo $inquiry == 'default' ? 'selected' : ''; ?>>選択してください</option>
+                  <option value="inquiry1" <?php echo $inquiry == 'inquiry1' ? 'selected' : ''; ?>>問い合わせ１</option>
+                  <option value="inquiry2" <?php echo $inquiry == 'inquiry2' ? 'selected' : ''; ?>>問い合わせ２</option>
+                  <option value="inquiry3" <?php echo $inquiry == 'inquiry3' ? 'selected' : ''; ?>>問い合わせ３</option>
+                </select>
+              </div>
+            </div>
+            <div class="error">
+              <?php if (!empty($textareaError)) : ?>
+                <div><?php echo $textareaError; ?></div>
+                <?php endif; ?>
+            </div>
+              <div class="sec_02_box">
+              <div class="sec_02_left">
+                <p class="b">お問い合わせ内容</p>
+                <p class="p">必須</p>
+              </div>
+                <div class="sec_02_right">
+                  <textarea rows="7" name="textarea"  placeholder="こちらにお問い合わせ内容をご記入ください"><?php echo htmlspecialchars($textarea); ?></textarea>
+              </div>
+            </div>
+            <div class="error">
+              <?php if ($checkboxError) : ?>
+                <div><?php echo $checkboxError; ?></div>
+                <?php endif; ?>
+              </div>
+              <div class="sec_02_box">
+              <div class="sec_02_left">
+                <p class="b">個人情報保護方針</p>
+                <p class="p">必須</p>
+              </div>
+                <div class="sec_02_right_02">
+                <input type="checkbox" id="checkbox" name="checkbox" <?php echo $checkbox ? 'checked' : ''; ?>>
+                <a href="#">個人情報保護方針📗</a>
+                <p>に同意します。</p>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </section>
+      <section class="sec_03">
+        <div class="wrapper">
+          <div class="sec_03_content">
+            <?php
            if ($check == true) {
-              echo '<a href="task9-1.php">送信</a>';
-              } else {
-            echo '<input type="submit" value="確認">';
-          }
-          ?>
+             echo '<input type="submit" value="送信">';
+            } else {
+              echo '<input type="submit" value="確認">';
+            }
+            ?>
           <div class="sec_03_box">
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </from>
     <section class="sec_04">
       <div class="wrapper">
         <div class="sec_04_content">
