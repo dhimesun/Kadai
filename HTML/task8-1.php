@@ -6,13 +6,13 @@ $emailError = "";
 $textareaError = "";
 $inquiryError = "";
 $checkboxError = "";
-$nameError = "";
-$kanaError = "";
-$phoneError = "";
-$emailError = "";
-$textareaError = "";
-$inquiryError = "";
-$checkboxError = "";
+$name = "";
+$kana = "";
+$phone = "";
+$email = "";
+$textarea = "";
+$inquiry = "";
+$checkbox = "";
 
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -65,7 +65,6 @@ if ($a && $b && $c && $d && $e && $f && $g) {
     $check = true;
 }
 
-}
 
 try {
   $pdo = new PDO(
@@ -109,6 +108,7 @@ try {
 } catch (PDOException $e) {
   echo $e->getMessage() . '<br>';
   exit;
+};
 }
 
 ?>
