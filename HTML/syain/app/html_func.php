@@ -60,12 +60,12 @@ function show_form($id, $name, $age, $work, $old_id, $status, $button)
     <p>社員番号</p>
     <input type="text" name="id" placeholder="例)10001" value="{$id}">
     <p>名前</p>
-    <input type="text" name="name" placeholder="例)10001" value="{$name}">
+    <input type="text" name="name" placeholder="例)中野 考" value="{$name}">
     <p>年齢</p>
-    <input type="text" name="age" placeholder="例)10001" value="{$age}">
+    <input type="text" name="age" placeholder="例)35" value="{$age}">
     <p>勤務形態</p>
-    <input type="text" name="work" placeholder="例)10001" value="{$work}">
-    <p>{$error}</p>
+    <input type="text" name="work" placeholder="例)社員" value="{$work}">
+    <p class="red">{$error}</p>
     <input type="hidden" name="old_id" value="{$old_id}">
     <input type="hidden" name="status" value="{$status}">
     <input type="submit" name="button" value="{$button}">
@@ -73,7 +73,8 @@ function show_form($id, $name, $age, $work, $old_id, $status, $button)
 FORM;  
 }
 
-function show_create(){
+function show_create()
+{
   $error = get_error();
   show_form("","","","","","create","登録");
 }
