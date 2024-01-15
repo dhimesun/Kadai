@@ -71,10 +71,68 @@ function show_form($id, $name, $age, $work, $old_id, $status, $button)
   </form>
 FORM;
 }
+
 function show_create()
 {
   $error = get_error();
   show_form("","","","","","create","登録");
 }
 
+function show_syain($member)
+{
+  echo <<<TABLE4
+  <table>
+    <tr>
+      <th>社員番号</th>
+      <th>名前</th>
+      <th>年齢</th>
+      <th>労働形態</th>
+    </tr>
+    <tr>
+      <td>{$member["id"]}</td>
+      <td>{$member["name"]}</td>
+      <td>{$member["age"]}</td>
+      <td>{$member["work"]}</td>
+    </tr>
+  </table>
+TABLE4;
+
+}
+
+function show_operation($member){
+  echo <<<TABLE5
+    <a href="syain_update.php?id={$member["id"]}">社員情報の更新</a>
+    <br>
+    <a href="syain_delete.php?id={$member["id"]}">社員情報の削除</a>
+    <br>
+TABLE5;
+}
+
+function show_update($default) {
+  $keys = ['id', 'name', 'age', 'work', 'old_id'];
+  foreach ($keys as $key) {
+    if (isset($default[$key])) {
+      $$key = $default[$key];
+    } else {
+      $$key = '';
+    }
+  }
+  show_form($id, $name, $age, $work, $old_id, 'update', '更新');
+  echo "<button><a href='syain_edit.php?id={$old_id}'>社員情報に戻る</a></button><br>";
+}
+
+function show_delete($id) {
+  $error = '';
+  $error = get_error();
+  echo <<<DELETE
+  <form action="post_data.php" method="post">
+    <p class="red">{$error}</p>
+    <input type="hidden" name="id" value="{$id}">
+    <input type="hidden" name="status" value="delete">
+    <p class="red">社員情報を削除してもよろしいですか？</p>
+    <input type="submit" name="button" value="削除する" class="red bold">
+  </form>
+  <button><a href="syain_edit.php?id={$id}">社員情報に戻る</a></button><br>
+DELETE;
+}
 ?>
